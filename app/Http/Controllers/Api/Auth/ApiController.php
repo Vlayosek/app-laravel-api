@@ -7,46 +7,28 @@ use Illuminate\Http\Request;
 
 class ApiController extends ApiResponseController
 {
-
-    public function login(Request $request)
+    public function profile()
     {
-        //VALIDACION
-        $rules = [
-            'email' => 'required|email',
-            'password' => 'required',
-        ];
-        $messages = [
-            'email.required' => 'El correo es requerido',
-            'email.email' => 'El correo no es valido',
-            'password.required' => 'El password es requerido',
-        ];
-        $resultValidate = $this->validateBack($request->all(), $rules, $messages);
-        if (!$resultValidate['response']) {
-            $this->messages = $resultValidate['messages'];
-        } else {
-            $createApp = new CreateAuthRegisterApp();
-            $data = $createApp->execute($request->all(), $this->user, $type);
+        $userData = auth()->user();
 
-            $this->response = $data['status'];
-
-            if(!$this->response){
-                $this->alert = $data['data'];
-                $data = [];
-            } else {
-                $data = $data['data'];
-            }
+        if(!$userData){
+            $this->alert = "User not found";
+            $this->status = 404;
+            return $this->returnShow($userData);
         }
-        return $this->returnCreate($data);
 
-    }
-    public function profile(Request $request)
-    {
-        //
+        $this->response = true;
+        $this->data = $userData;;
+        return $this->returnShow($userData);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        //
+        $token = auth()->user()->token();
+        $token->revoke();
+        $this->response = true;
+        $this->alert = "Logout successfully";
+        return $this->returnShow();
     }
 
 }
