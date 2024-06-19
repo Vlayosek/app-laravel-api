@@ -91,7 +91,7 @@ class GetAuthLoginApp extends AppGeneralAbstract
             $this->dataOutput = $array;
             $this->endConsult = 1;
         } else {
-            $this->dataOutput = 'Credenciales Incorrectas';
+            $this->dataOutput = 'Unauthorised';
             $this->endConsult = 0;
         }
     }

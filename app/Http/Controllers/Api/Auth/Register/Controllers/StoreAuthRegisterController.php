@@ -18,7 +18,7 @@ class StoreAuthRegisterController extends ApiResponseController
                 $rules = [
                     'name' => 'required|max:255|min:5',
                     'email' => 'required|email|unique:users',
-                    'password' => 'required|min:6',
+                    'password' => 'required|min:6|confirmed',
                 ];
                 $messages = [
                     'name.required' => 'El nombre es requerido',
@@ -29,6 +29,7 @@ class StoreAuthRegisterController extends ApiResponseController
                     'email.unique' => 'El correo ya existe',
                     'password.required' => 'El password es requerido',
                     'password.min' => 'El password debe tener al menos 6 caracteres',
+                    'password.confirmed' => 'El password no coincide',
                 ];
                 $type = 'byOne';
                 break;

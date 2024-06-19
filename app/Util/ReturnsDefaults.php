@@ -53,6 +53,7 @@ trait ReturnsDefaults
     public function returnCreate($data = [])
     {
         if ($this->response) {
+            $this->status = Response::HTTP_OK;
             $this->alert = 'Creado Correctamente..';
         }
         $this->returnDefault();
@@ -87,6 +88,20 @@ trait ReturnsDefaults
             'response'  => $this->response,
             'msj'     => $this->alert,
             'messages'  => $this->messages,
+        ];
+    }
+
+    public function returnRevokeToken($data = [], $headers = [], $message = false)
+    {
+        if ($this->response) {
+            $this->status = Response::HTTP_OK;
+            $this->alert = 'User Logout successfully';
+        }
+        return [
+            'status'    => $this->status,
+            'response'  => $this->response,
+            'msj'     => $this->alert,
+            'data'      => $data,
         ];
     }
 }
